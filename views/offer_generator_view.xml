@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_offer_generator_tree" model="ir.ui.view">
+    <field name="name">offer.generator.tree</field>
+    <field name="model">offer.generator</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="client_id"/>
+            <field name="product_count"/>
+        </tree>
+    </field>
+    </record>
+
+    <record id="view_offer_generator_kanban" model="ir.ui.view">
+        <field name="name">offer.generator.kanban</field>
+        <field name="model">offer.generator</field>
+        <field name="arch" type="xml">
+            <kanban>
+            <field name="name"/>
+            <field name="client_id"/>
+            <field name="product_count"/>
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="oe_kanban_card">
+                        <strong><field name="name"/></strong>
+                        <div><field name="client_id"/></div>
+                        <div>Produktų skaičius: <field name="product_count"/></div>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+        </field>
+    </record>
+
+<!--    <record id="view_offer_generator_search" model="ir.ui.view">-->
+<!--        <field name="name">offer.generator.search</field>-->
+<!--        <field name="model">offer.generator</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search>-->
+<!--                <field name="name"/>-->
+<!--                <field name="client_id"/>-->
+
+<!--                <filter string="Errors" domain="[('has_errors', '=', True)]"/>-->
+<!--                <filter string="No Errors" domain="[('has_errors', '=', False)]"/>-->
+
+<!--                <group expand="1" string="Grupuoti pagal klientą" context="{'group_by': 'client_id'}"/>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="action_offer_generator" model="ir.actions.act_window">
+        <field name="name">offer.generator.action</field>
+        <field name="res_model">offer.generator</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="view_offer_generator_tree"/>
+<!--        <field name="search_view_id" ref="view_offer_generator_search"/>-->
+    </record>
+
+    <menuitem id="menu_offer_generator"
+              name="Pasiūlymų generatorius"
+              action="action_offer_generator"
+              parent="sale.sale_order_menu"
+              sequence="15"/>
+
+</odoo>
