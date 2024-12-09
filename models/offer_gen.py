@@ -8,7 +8,7 @@ class OfferGenerator(models.Model):
     name = fields.Char(string='Pavadinimas', required=True, default='Naujas')
     state = fields.Selection([
         ('new', 'Naujas'),
-        ('comfirmed', 'Patvirtintas'),
+        ('confirmed', 'Patvirtintas'),
         ('canceled', 'Atšauktas')
         ], default='new')
     client_id = fields.Many2one('res.partner', string='Klientas', required=True)
@@ -50,7 +50,7 @@ class OfferGenerator(models.Model):
             'partner_id': self.client_id.id,
             'order_line': [(0, 0, {
                 'product_id': line.product_id.id,
-                'procuct_uom_qty': line.quantity,
+                'product_uom_qty': line.quantity,
             }) for line in self.product_lines],
         })
         self.sale_order_id = sale_order.id
@@ -76,6 +76,6 @@ class OfferGeneratorLine(models.Model):
 
     offer_id = fields.Many2one('offer.generator', string="Pasiūlymas", required=True)
     product_id = fields.Many2one('product.product', string="Produktas", required=True)
-    product_uom_id = fields.Many2one('uom.uom', string="Units of measure", related='product_id.uom_id', readonly=True)
+    # product_uom_id = fields.Many2one('uom.uom', string="Units of measure", related='product_id.uom_id', readonly=True)
     quantity = fields.Integer(string="Kiekis", required=True, default=1)
     input_value = fields.Char()
